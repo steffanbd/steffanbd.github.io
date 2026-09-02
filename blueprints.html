@@ -139,6 +139,34 @@
   .linechart-wrap{margin-bottom:8px;}
   .linechart-wrap svg{width:100%; height:auto; display:block;}
 
+  /* state-grid map */
+  .map-controls{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:18px;}
+  .map-controls label{font-size:12.5px; color:var(--ink-soft); font-weight:600;}
+  .map-controls select{
+    font-family:"IBM Plex Sans", sans-serif; font-size:13px; color:var(--ink); background:var(--surface-2);
+    border:1px solid var(--line-strong); border-radius:8px; padding:7px 10px;
+  }
+  .map-layout{display:grid; grid-template-columns:minmax(220px,1fr) 200px; gap:24px; align-items:start;}
+  .mapgrid{
+    display:grid; grid-template-columns:repeat(5,1fr); grid-auto-rows:44px; gap:6px;
+  }
+  .state-tile{
+    display:flex; align-items:center; justify-content:center; border-radius:8px;
+    background:var(--surface-2); border:1px solid var(--line); font-family:"IBM Plex Mono",monospace;
+    font-size:12.5px; font-weight:600; color:var(--ink-soft); cursor:pointer; user-select:none;
+  }
+  .state-tile:hover{border-color:var(--accent); color:var(--ink);}
+  .state-tile.active{background:var(--accent); border-color:var(--accent); color:#fff;}
+  .rate-panel{
+    background:var(--surface-2); border:1px solid var(--line); border-radius:12px; padding:16px;
+    display:flex; flex-direction:column; gap:4px; height:fit-content;
+  }
+  .rate-panel .r-state{font-size:13px; color:var(--ink-soft);}
+  .rate-panel .r-role{font-size:12px; color:var(--ink-faint); margin-bottom:6px;}
+  .rate-panel .r-value{font-size:32px; font-weight:600; font-family:"Fraunces",serif;}
+  .rate-panel .r-unit{font-size:12px; color:var(--ink-faint);}
+  @media (max-width:640px){ .map-layout{grid-template-columns:1fr;} }
+
   /* sql */
   .sql-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(320px,1fr)); gap:16px;}
   .sql-card{background:var(--surface-2); border:1px solid var(--line); border-radius:11px; padding:16px 18px; overflow-x:auto; min-width:0;}
@@ -179,7 +207,7 @@
     <div class="eyebrow">Blueprints</div>
     <h1>How the numbers get made</h1>
     <p>A working sketch of the dashboards, pivots, SQL, and models behind the Experience section — the instruments, not just the résumé line.</p>
-    <div class="honesty-note">Every piece below is an illustrative reconstruction built to demonstrate the underlying skill and the type of problem it solved — not a screenshot of employer systems or real employer data. Figures are representative.</div>
+    <div class="honesty-note">Every piece below is an example model, not a screenshot of employer systems or real employer data — company names, systems, and figures have been generalized or altered. My actual work history and accomplishments live on the Resume page; these are demonstrations of how I approach the same kinds of problems.</div>
   </div>
 
   <div class="pieces">
@@ -188,19 +216,19 @@
     <section class="piece">
       <div class="illustrative">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg>
-        Illustrative
+        Example model
       </div>
       <div class="piece-head">
         <h2>Campus Space Utilization Dashboard</h2>
         <div class="piece-tools"><span class="piece-tag">Power BI</span><span class="piece-tag">Excel Pivot</span><span class="piece-tag">Archibus</span></div>
       </div>
-      <p class="piece-desc">Modeled on the utilization reporting built at American University: reconciling Archibus space records into KPI tiles and a by-building utilization view for capital-planning decisions.</p>
+      <p class="piece-desc">The kind of utilization reporting built for a university facilities team: reconciling space-management records into KPI tiles and a by-building utilization view for capital-planning decisions.</p>
 
       <div class="stat-row">
-        <div class="stat-tile"><div class="label">Buildings tracked</div><div class="value">12</div></div>
-        <div class="stat-tile"><div class="label">Sq ft managed</div><div class="value">1.8M</div></div>
-        <div class="stat-tile"><div class="label">Avg utilization</div><div class="value">71%</div></div>
-        <div class="stat-tile"><div class="label">Rooms audited (qtr)</div><div class="value">640</div></div>
+        <div class="stat-tile"><div class="label">Buildings tracked</div><div class="value">15</div></div>
+        <div class="stat-tile"><div class="label">Sq ft managed</div><div class="value">2.2M</div></div>
+        <div class="stat-tile"><div class="label">Avg utilization</div><div class="value">76%</div></div>
+        <div class="stat-tile"><div class="label">Rooms audited (qtr)</div><div class="value">510</div></div>
       </div>
 
       <div class="barchart" id="chart-util"></div>
@@ -210,13 +238,13 @@
     <section class="piece">
       <div class="illustrative">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg>
-        Illustrative
+        Example model
       </div>
       <div class="piece-head">
         <h2>Compensation Pivot — Pay by Role &amp; Level</h2>
         <div class="piece-tools"><span class="piece-tag">Excel Power Pivot</span><span class="piece-tag">Power BI</span></div>
       </div>
-      <p class="piece-desc">Modeled on the compensation-analytics tool built at AMI Expeditionary Healthcare — pay rates cross-tabbed by role family and level, the kind of view that let HR Business Partners spot a compression point at a glance.</p>
+      <p class="piece-desc">The kind of compensation-analytics tool built for HR Business Partners — pay rates cross-tabbed by role family and level, so a compression point stands out at a glance.</p>
 
       <div class="pivot-wrap">
         <table class="pivot">
@@ -235,13 +263,13 @@
     <section class="piece">
       <div class="illustrative">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg>
-        Illustrative
+        Example model
       </div>
       <div class="piece-head">
         <h2>Revenue Forecast &amp; Branch Performance</h2>
         <div class="piece-tools"><span class="piece-tag">Power BI</span><span class="piece-tag">Excel Forecasting</span></div>
       </div>
-      <p class="piece-desc">Modeled on the forecasting tool built at Grupo CMA that flagged underperforming branches and contributed to a $7M+ topline revenue strategy.</p>
+      <p class="piece-desc">The kind of forecasting tool used to flag underperforming branches and quantify their drag on a topline revenue strategy.</p>
 
       <div class="linechart-wrap" id="chart-revenue"></div>
 
@@ -252,7 +280,7 @@
     <section class="piece">
       <div class="illustrative">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg>
-        Illustrative
+        Example model
       </div>
       <div class="piece-head">
         <h2>SQL — Reconciliation &amp; Recruiting Queries</h2>
@@ -294,7 +322,7 @@
     <section class="piece">
       <div class="illustrative">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg>
-        Illustrative
+        Example model
       </div>
       <div class="piece-head">
         <h2>Predictive Model — Feature Importance</h2>
@@ -303,6 +331,41 @@
       <p class="piece-desc">From graduate Predictive Analytics coursework — an XGBoost model built in R for a team real-estate pricing project, alongside an OLS baseline. Reconstruction of the feature-importance output.</p>
 
       <div class="hbars" id="chart-features"></div>
+    </section>
+
+    <!-- 6. Interactive rate explorer -->
+    <section class="piece">
+      <div class="illustrative">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg>
+        Interactive demo
+      </div>
+      <div class="piece-head">
+        <h2>Staffing Rate Explorer — Click a State, Pick a Role</h2>
+        <div class="piece-tools"><span class="piece-tag">JavaScript</span><span class="piece-tag">CSS Grid</span><span class="piece-tag">Live filtering</span></div>
+      </div>
+      <p class="piece-desc">A live, click-to-filter tool rather than a static chart: pick a state, pick a role, and the rate panel updates instantly — the kind of interactive benchmarking tool I'd build for a staffing or compensation team to explore pay by market.</p>
+
+      <div class="map-controls">
+        <label for="role-select">Role</label>
+        <select id="role-select">
+          <option value="RN">Registered Nurse</option>
+          <option value="MD">Physician</option>
+          <option value="RT">Respiratory Therapist</option>
+          <option value="NP">Nurse Practitioner</option>
+          <option value="PT">Physical Therapist</option>
+        </select>
+      </div>
+
+      <div class="map-layout">
+        <div class="mapgrid" id="state-map"></div>
+        <div class="rate-panel">
+          <div class="r-state" id="rp-state">—</div>
+          <div class="r-role" id="rp-role">—</div>
+          <div class="r-value" id="rp-value">—</div>
+          <div class="r-unit">avg hourly rate</div>
+        </div>
+      </div>
+      <div class="honesty-note" style="margin-top:16px;">Rates shown are illustrative sample figures for demonstration purposes only — not sourced wage data.</div>
     </section>
 
   </div>
@@ -337,10 +400,10 @@
 
   // ---- 2. Pivot table ----
   var roles = [
-    {name:"Data & Analytics", vals:[68000, 89000, 118000]},
-    {name:"HR & People", vals:[61000, 79000, 104000]},
-    {name:"Operations", vals:[58000, 76000, 99000]},
-    {name:"Facilities", vals:[55000, 71000, 93000]}
+    {name:"Data & Analytics", vals:[65000, 92000, 121000]},
+    {name:"HR & People", vals:[59000, 82000, 107000]},
+    {name:"Operations", vals:[60000, 74000, 96000]},
+    {name:"Facilities", vals:[53000, 69000, 90000]}
   ];
   var body = document.getElementById("pivot-body");
   var fmt = function(n){ return "$" + n.toLocaleString("en-US"); };
@@ -359,7 +422,7 @@
 
   // ---- 3. Revenue line chart (SVG) ----
   var months = ["Jan","Feb","Mar","Apr","May","Jun"];
-  var revenue = [860,910,875,960,1040,1180]; // thousands
+  var revenue = [790,845,820,905,965,1090]; // thousands
   var w = 640, h = 190, padL = 34, padR = 20, padT = 20, padB = 28;
   var maxR = 1300, minR = 700;
   var xStep = (w - padL - padR) / (revenue.length - 1);
@@ -386,10 +449,10 @@
 
   // ---- Branch performance ----
   var branches = [
-    {name:"Branch — San José", pct:104, status:"good"},
-    {name:"Branch — Heredia", pct:97, status:"good"},
-    {name:"Branch — Alajuela", pct:71, status:"critical"},
-    {name:"Branch — Escazú", pct:68, status:"critical"}
+    {name:"Branch — North", pct:108, status:"good"},
+    {name:"Branch — Central", pct:94, status:"good"},
+    {name:"Branch — South", pct:74, status:"critical"},
+    {name:"Branch — West", pct:63, status:"critical"}
   ];
   var chartBranches = document.getElementById("chart-branches");
   branches.forEach(function(b){
@@ -429,5 +492,60 @@
       '<div class="hval">'+f.score+'</div>';
     chartFeat.appendChild(row);
   });
+
+  // ---- 6. Staffing rate explorer ----
+  var roleLabels = {RN:"Registered Nurse", MD:"Physician", RT:"Respiratory Therapist", NP:"Nurse Practitioner", PT:"Physical Therapist"};
+  var rateData = {
+    WA:{name:"Washington", col:1, row:1, RN:41, MD:144, RT:38, NP:66, PT:50},
+    NY:{name:"New York",   col:5, row:1, RN:44, MD:156, RT:42, NP:72, PT:55},
+    CA:{name:"California", col:1, row:2, RN:46, MD:162, RT:43, NP:74, PT:57},
+    IL:{name:"Illinois",   col:3, row:2, RN:36, MD:126, RT:34, NP:58, PT:44},
+    VA:{name:"Virginia",   col:4, row:2, RN:34, MD:120, RT:32, NP:55, PT:42},
+    MA:{name:"Massachusetts", col:5, row:2, RN:43, MD:150, RT:40, NP:69, PT:53},
+    CO:{name:"Colorado",   col:2, row:3, RN:37, MD:132, RT:35, NP:61, PT:46},
+    TX:{name:"Texas",      col:2, row:4, RN:32, MD:114, RT:30, NP:52, PT:40},
+    FL:{name:"Florida",    col:4, row:4, RN:33, MD:118, RT:31, NP:54, PT:41}
+  };
+  var stateMap = document.getElementById("state-map");
+  var roleSelect = document.getElementById("role-select");
+  var rpState = document.getElementById("rp-state");
+  var rpRole = document.getElementById("rp-role");
+  var rpValue = document.getElementById("rp-value");
+  var activeState = "WA";
+
+  Object.keys(rateData).forEach(function(code){
+    var d = rateData[code];
+    var tile = document.createElement("div");
+    tile.className = "state-tile";
+    tile.textContent = code;
+    tile.style.gridColumn = d.col;
+    tile.style.gridRow = d.row;
+    tile.setAttribute("data-state", code);
+    tile.setAttribute("role", "button");
+    tile.setAttribute("tabindex", "0");
+    tile.setAttribute("aria-label", "Show rates for " + d.name);
+    tile.addEventListener("click", function(){ selectState(code); });
+    tile.addEventListener("keydown", function(e){ if(e.key === "Enter" || e.key === " "){ e.preventDefault(); selectState(code); } });
+    stateMap.appendChild(tile);
+  });
+
+  function selectState(code){
+    activeState = code;
+    Array.prototype.forEach.call(stateMap.children, function(el){
+      el.classList.toggle("active", el.getAttribute("data-state") === code);
+    });
+    renderRate();
+  }
+
+  function renderRate(){
+    var d = rateData[activeState];
+    var role = roleSelect.value;
+    rpState.textContent = d.name;
+    rpRole.textContent = roleLabels[role];
+    rpValue.innerHTML = "$" + d[role] + "<span class=\"r-unit\" style=\"font-size:16px;\">/hr</span>";
+  }
+
+  roleSelect.addEventListener("change", renderRate);
+  selectState("WA");
 })();
 </script>
