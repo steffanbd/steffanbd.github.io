@@ -139,6 +139,24 @@
   .linechart-wrap{margin-bottom:8px;}
   .linechart-wrap svg{width:100%; height:auto; display:block;}
 
+  /* chart layout helpers */
+  .chart-row{display:grid; grid-template-columns:1.3fr 1fr; gap:28px; align-items:center;}
+  @media (max-width:760px){ .chart-row{grid-template-columns:1fr; gap:22px;} }
+  .chart-note{
+    font-size:12.5px; color:var(--ink-faint); line-height:1.65; margin-top:16px;
+    padding-top:14px; border-top:1px solid var(--line);
+  }
+  .chart-note b{color:var(--ink-soft); font-weight:600;}
+
+  /* donut chart */
+  .donut-wrap{display:flex; align-items:center; gap:22px; flex-wrap:wrap;}
+  .donut-wrap svg{flex:none;}
+  .donut-center-label{font-family:"Fraunces",serif;}
+  .donut-legend{display:flex; flex-direction:column; gap:8px; font-size:12.5px; flex:1; min-width:150px;}
+  .donut-legend .dl-row{display:flex; align-items:center; gap:8px; color:var(--ink-soft);}
+  .donut-legend .sw{width:9px; height:9px; border-radius:2px; flex:none;}
+  .donut-legend .dl-val{margin-left:auto; font-family:"IBM Plex Mono",monospace; color:var(--ink); font-weight:600;}
+
   /* state-grid map */
   .map-controls{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:18px;}
   .map-controls label{font-size:12.5px; color:var(--ink-soft); font-weight:600;}
@@ -167,17 +185,37 @@
   .rate-panel .r-unit{font-size:12px; color:var(--ink-faint);}
   @media (max-width:640px){ .map-layout{grid-template-columns:1fr;} }
 
-  /* sql */
-  .sql-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(320px,1fr)); gap:16px;}
-  .sql-card{background:var(--surface-2); border:1px solid var(--line); border-radius:11px; padding:16px 18px; overflow-x:auto; min-width:0;}
-  .sql-card .sql-title{font-size:12.5px; font-weight:600; color:var(--ink); margin-bottom:2px;}
-  .sql-card .sql-purpose{font-size:12px; color:var(--ink-faint); margin-bottom:12px;}
-  .sql-card pre{margin:0; font-family:"IBM Plex Mono",monospace; font-size:12.3px; line-height:1.65; white-space:pre;}
+  /* sql / code cards */
+  .sql-grid, .code-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(320px,1fr)); gap:16px;}
+  .sql-card, .code-card{background:var(--surface-2); border:1px solid var(--line); border-radius:11px; padding:16px 18px; overflow-x:auto; min-width:0;}
+  .sql-card .sql-title, .code-card .sql-title{font-size:12.5px; font-weight:600; color:var(--ink); margin-bottom:2px;}
+  .sql-card .sql-purpose, .code-card .sql-purpose{font-size:12px; color:var(--ink-faint); margin-bottom:12px;}
+  .sql-card pre, .code-card pre{margin:0; font-family:"IBM Plex Mono",monospace; font-size:12.3px; line-height:1.65; white-space:pre;}
   .kw{color:var(--accent-strong); font-weight:600;}
   .cm{color:var(--ink-faint); font-style:italic;}
   .st{color:#8a6d3b;}
   @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .st{color:#d9b46a;}}
   :root[data-theme="dark"] .st{color:#d9b46a;}
+
+  /* ER diagram */
+  .erd-card{
+    background:var(--surface-2); border:1px solid var(--line); border-radius:11px;
+    padding:18px; margin-bottom:16px; overflow-x:auto;
+  }
+  .erd-card svg{display:block; width:100%; height:auto; min-width:560px;}
+  .erd-box{fill:var(--surface); stroke:var(--line-strong); stroke-width:1;}
+  .erd-box.junction{stroke:var(--accent); stroke-width:1.4;}
+  .erd-title{font-family:"IBM Plex Mono",monospace; font-size:11.5px; font-weight:600; fill:var(--ink);}
+  .erd-field{font-family:"IBM Plex Mono",monospace; font-size:9.5px; fill:var(--ink-faint);}
+  .erd-line{stroke:var(--ink-faint); stroke-width:1.1; fill:none;}
+  .erd-line.junction{stroke:var(--accent-strong); stroke-dasharray:3 3;}
+  .erd-card-lbl{font-family:"IBM Plex Mono",monospace; font-size:10px; fill:var(--accent-strong); font-weight:600;}
+
+  .section-label{
+    font-size:11px; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-faint);
+    font-weight:700; margin:22px 0 10px;
+  }
+  .section-label:first-child{margin-top:0;}
 
   footer.pagefoot{
     max-width:1180px; margin:8px auto 0; padding:20px clamp(20px,4vw,56px) 0;
@@ -231,7 +269,18 @@
         <div class="stat-tile"><div class="label">Rooms audited (qtr)</div><div class="value">510</div></div>
       </div>
 
-      <div class="barchart" id="chart-util"></div>
+      <div class="chart-row">
+        <div>
+          <div class="section-label">Utilization by space type</div>
+          <div class="barchart" id="chart-util"></div>
+        </div>
+        <div>
+          <div class="section-label">Share of 2.2M sq ft managed</div>
+          <div class="donut-wrap" id="chart-spacemix"></div>
+        </div>
+      </div>
+
+      <div class="chart-note"><b>Two views, one field swapped.</b> The bar chart answers what a PivotTable's default view answers — magnitude, ranked by category. The donut answers a different question — composition, what share of the footprint each space type actually holds. In Power BI both come from the same visual field well: swap the report type and drag the same measure into a different slot; the underlying table never changes.</div>
     </section>
 
     <!-- 2. Compensation pivot -->
@@ -257,6 +306,7 @@
           </tfoot>
         </table>
       </div>
+      <div class="chart-note"><b>Why a cross-tab.</b> Associate/Mid/Senior is an ordinal progression, so the tint deepens left to right rather than jumping between unrelated colors — the compression point (Facilities Associate vs. Operations Mid, for example) reads directly off the shading, no separate chart required. This is exactly what Power Pivot's row/column field wells and a DAX measure do automatically once the model's built once.</div>
     </section>
 
     <!-- 3. Revenue forecast -->
@@ -272,23 +322,77 @@
       <p class="piece-desc">The kind of forecasting tool used to flag underperforming branches and quantify their drag on a topline revenue strategy.</p>
 
       <div class="linechart-wrap" id="chart-revenue"></div>
+      <div class="chart-note"><b>Why a line here.</b> A line chart is built for one job — trend over time — which is how a $1.09M month reads as momentum instead of just a number. In Power BI, the same measure with a date hierarchy in the axis well gets Year → Quarter → Month drill-down for free.</div>
 
       <div class="hbars" id="chart-branches" style="margin-top:18px;"></div>
     </section>
 
-    <!-- 4. SQL -->
+    <!-- 4. SQL & Access -->
     <section class="piece">
       <div class="illustrative">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg>
         Example model
       </div>
       <div class="piece-head">
-        <h2>SQL — Reconciliation &amp; Recruiting Queries</h2>
-        <div class="piece-tools"><span class="piece-tag">SQL</span><span class="piece-tag">Workday</span><span class="piece-tag">Archibus</span></div>
+        <h2>SQL &amp; Access — Reconciliation, Recruiting &amp; Schema Design</h2>
+        <div class="piece-tools"><span class="piece-tag">SQL</span><span class="piece-tag">MS Access</span><span class="piece-tag">Workday</span><span class="piece-tag">Archibus</span></div>
       </div>
-      <p class="piece-desc">Query patterns from graduate SQL coursework, written in the shape of the reconciliation and workforce-reporting problems described in Experience.</p>
+      <p class="piece-desc">Query patterns from graduate SQL coursework, written in the shape of the reconciliation and workforce-reporting problems described in Experience — plus the relational model those queries actually sit on top of.</p>
+
+      <div class="section-label">Schema — building → room ↔ department</div>
+      <div class="erd-card">
+        <svg viewBox="0 0 640 250" role="img" aria-label="Entity relationship diagram: Buildings has a one-to-many relationship with Rooms; Rooms and Departments have a many-to-many relationship resolved through a Room Department Assignments junction table">
+          <rect class="erd-box" x="16" y="16" width="168" height="70" rx="3"/>
+          <text class="erd-title" x="26" y="34">BUILDINGS</text>
+          <text class="erd-field" x="26" y="52">PK  building_id</text>
+          <text class="erd-field" x="26" y="65">name, campus_zone</text>
+          <text class="erd-field" x="26" y="78">sq_ft_total</text>
+
+          <rect class="erd-box" x="236" y="16" width="168" height="70" rx="3"/>
+          <text class="erd-title" x="246" y="34">ROOMS</text>
+          <text class="erd-field" x="246" y="52">PK  room_id</text>
+          <text class="erd-field" x="246" y="65">FK  building_id</text>
+          <text class="erd-field" x="246" y="78">room_type, sq_ft</text>
+
+          <rect class="erd-box" x="456" y="146" width="168" height="70" rx="3"/>
+          <text class="erd-title" x="466" y="164">DEPARTMENTS</text>
+          <text class="erd-field" x="466" y="182">PK  dept_code</text>
+          <text class="erd-field" x="466" y="195">dept_name</text>
+          <text class="erd-field" x="466" y="208">cost_center</text>
+
+          <rect class="erd-box junction" x="236" y="146" width="168" height="70" rx="3"/>
+          <text class="erd-title" x="246" y="164">ROOM_DEPT_ASSIGNMENTS</text>
+          <text class="erd-field" x="246" y="182">FK  room_id</text>
+          <text class="erd-field" x="246" y="195">FK  dept_code</text>
+          <text class="erd-field" x="246" y="208">pct_occupied</text>
+
+          <path class="erd-line" d="M184,51 L236,51"/>
+          <text class="erd-card-lbl" x="192" y="45">1</text>
+          <text class="erd-card-lbl" x="216" y="45">∞</text>
+
+          <path class="erd-line junction" d="M320,86 L320,146"/>
+          <text class="erd-card-lbl" x="326" y="102">1</text>
+          <text class="erd-card-lbl" x="326" y="138">∞</text>
+
+          <path class="erd-line junction" d="M456,181 L404,181"/>
+          <text class="erd-card-lbl" x="424" y="175">1</text>
+          <text class="erd-card-lbl" x="410" y="175">∞</text>
+        </svg>
+      </div>
 
       <div class="sql-grid">
+        <div class="sql-card">
+          <div class="sql-title">Rooms shared across more than one department</div>
+          <div class="sql-purpose">Many-to-many resolved through the junction table</div>
+          <pre><span class="kw">SELECT</span> r.room_id, b.name <span class="kw">AS</span> building,
+       <span class="kw">COUNT</span>(rda.dept_code) <span class="kw">AS</span> depts_sharing_room
+<span class="kw">FROM</span> rooms r
+<span class="kw">JOIN</span> buildings b <span class="kw">ON</span> b.building_id = r.building_id
+<span class="kw">JOIN</span> room_dept_assignments rda <span class="kw">ON</span> rda.room_id = r.room_id
+<span class="kw">GROUP BY</span> r.room_id, b.name
+<span class="kw">HAVING</span> <span class="kw">COUNT</span>(rda.dept_code) &gt; <span class="kw">1</span>
+<span class="kw">ORDER BY</span> depts_sharing_room <span class="kw">DESC</span>;</pre>
+        </div>
         <div class="sql-card">
           <div class="sql-title">Flag space records out of sync between systems</div>
           <div class="sql-purpose">Archibus vs. Workday department reconciliation</div>
@@ -316,6 +420,8 @@
 <span class="kw">ORDER BY</span> stage_order;</pre>
         </div>
       </div>
+
+      <div class="chart-note"><b>Same relationships, drawn in Access.</b> This is the schema Archibus's own space-and-department data follows: a building owns many rooms — a plain one-to-many, one foreign key. A room and a department don't own each other outright, though — a shared conference room serves more than one department, and a department spans more than one room — so that's a many-to-many, and neither Access nor SQL can express it with a single foreign key. <span class="mono">room_dept_assignments</span> resolves it: a junction table with a composite key, dragged into Access's Relationships window with referential integrity enforced on both foreign keys, so a room can't be assigned to a department that doesn't exist and a building can't be deleted out from under its rooms.</div>
     </section>
 
     <!-- 5. XGBoost feature importance -->
@@ -326,11 +432,47 @@
       </div>
       <div class="piece-head">
         <h2>Predictive Model — Feature Importance</h2>
-        <div class="piece-tools"><span class="piece-tag">R</span><span class="piece-tag">XGBoost</span><span class="piece-tag">OLS Regression</span></div>
+        <div class="piece-tools"><span class="piece-tag">R</span><span class="piece-tag">XGBoost</span><span class="piece-tag">OLS Regression</span><span class="piece-tag">ggplot2</span></div>
       </div>
-      <p class="piece-desc">From graduate Predictive Analytics coursework — an XGBoost model built in R for a team real-estate pricing project, alongside an OLS baseline. Reconstruction of the feature-importance output.</p>
+      <p class="piece-desc">From graduate Predictive Analytics coursework — an XGBoost model built in R for a team real-estate pricing project, alongside an OLS baseline. Reconstruction of the feature-importance output below, plus the R this ran on.</p>
 
       <div class="hbars" id="chart-features"></div>
+
+      <div class="section-label">R — OLS baseline, then the XGBoost fit behind the chart above</div>
+      <div class="code-grid">
+        <div class="code-card">
+          <div class="sql-title">Baseline — interpretable coefficients</div>
+          <div class="sql-purpose">lm(), for the number a stakeholder can be walked through</div>
+          <pre><span class="kw">library</span>(tidyverse)
+
+ols <- <span class="kw">lm</span>(sale_price ~ sqft + neighborhood_score +
+             year_built + bedrooms + lot_size + school_rating,
+           data = listings)
+
+<span class="kw">summary</span>(ols)
+<span class="cm">#&gt; sqft                  142.30    9.81   14.51  &lt;0.0001
+#&gt; neighborhood_score  8420.00 1205.00    6.99  &lt;0.0001
+#&gt; year_built            611.40  140.20    4.36  &lt;0.0001
+#&gt; Adjusted R-squared: 0.71</span></pre>
+        </div>
+        <div class="code-card">
+          <div class="sql-title">XGBoost — non-linear fit, then the chart itself</div>
+          <div class="sql-purpose">xgboost() + xgb.importance() → ggplot2</div>
+          <pre><span class="kw">library</span>(xgboost); <span class="kw">library</span>(ggplot2)
+
+fit <- <span class="kw">xgboost</span>(data = train_x, label = train_y,
+    nrounds = <span class="kw">200</span>, max_depth = <span class="kw">4</span>, eta = <span class="kw">0.05</span>,
+    objective = <span class="st">"reg:squarederror"</span>, verbose = <span class="kw">0</span>)
+
+imp <- <span class="kw">xgb.importance</span>(model = fit)
+
+<span class="kw">ggplot</span>(imp, <span class="kw">aes</span>(<span class="kw">reorder</span>(Feature, Gain), Gain)) +
+  <span class="kw">geom_col</span>(fill = <span class="st">"#0E6E58"</span>) + <span class="kw">coord_flip</span>() +
+  <span class="kw">labs</span>(title = <span class="st">"Feature Importance — Gain"</span>, x = <span class="kw">NULL</span>)</pre>
+        </div>
+      </div>
+
+      <div class="chart-note"><b>Why run both.</b> XGBoost catches interactions an OLS baseline can't — lot size matters more once school rating is already high — but the OLS summary is what actually explains a coefficient to a stakeholder who asks "why." Running both as a script rather than a notebook of manual steps means the same pipeline reruns cleanly on next semester's listings, and <span class="mono">ggplot2</span> turns whichever model wins into the chart above without leaving R.</div>
     </section>
 
     <!-- 6. Interactive rate explorer -->
@@ -398,6 +540,40 @@
     chartUtil.appendChild(col);
   });
 
+  // ---- 1b. Space-mix donut ----
+  var spaceMix = [
+    {label:"Academic", pct:38, color:"var(--accent-strong)"},
+    {label:"Residential", pct:26, color:"var(--accent)"},
+    {label:"Admin", pct:14, color:"var(--teal-300)"},
+    {label:"Athletics", pct:12, color:"var(--teal-200)"},
+    {label:"Library", pct:10, color:"var(--teal-100)"}
+  ];
+  (function(){
+    var size = 168, cx = size/2, cy = size/2, r = 58, sw = 24;
+    var circumference = 2 * Math.PI * r;
+    var offset = 0;
+    var svgParts = ['<svg width="'+size+'" height="'+size+'" viewBox="0 0 '+size+' '+size+'" role="img" aria-label="Donut chart: share of managed square footage by space type">'];
+    svgParts.push('<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="var(--surface-2)" stroke-width="'+sw+'"/>');
+    spaceMix.forEach(function(d){
+      var len = (d.pct/100) * circumference;
+      svgParts.push('<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="'+d.color+'" stroke-width="'+sw+
+        '" stroke-dasharray="'+len.toFixed(1)+' '+(circumference-len).toFixed(1)+
+        '" stroke-dashoffset="'+(-offset).toFixed(1)+'" transform="rotate(-90 '+cx+' '+cy+')"/>');
+      offset += len;
+    });
+    svgParts.push('<text x="'+cx+'" y="'+(cy-3)+'" text-anchor="middle" class="donut-center-label" font-size="22" font-weight="600" fill="var(--ink)">2.2M</text>');
+    svgParts.push('<text x="'+cx+'" y="'+(cy+15)+'" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)" font-family="IBM Plex Sans, sans-serif">sq ft</text>');
+    svgParts.push('</svg>');
+
+    var legend = ['<div class="donut-legend">'];
+    spaceMix.forEach(function(d){
+      legend.push('<div class="dl-row"><span class="sw" style="background:'+d.color+';"></span>'+d.label+'<span class="dl-val">'+d.pct+'%</span></div>');
+    });
+    legend.push('</div>');
+
+    document.getElementById("chart-spacemix").innerHTML = svgParts.join("") + legend.join("");
+  })();
+
   // ---- 2. Pivot table ----
   var roles = [
     {name:"Data & Analytics", vals:[65000, 92000, 121000]},
@@ -459,7 +635,6 @@
     var color = b.status === "good" ? "var(--good)" : "var(--critical)";
     var row = document.createElement("div");
     row.className = "hbar-row";
-    var badge = b.status === "critical" ? ' <span style="color:var(--critical); font-weight:600;">Below target</span>' : "";
     row.innerHTML =
       '<div class="hlabel">'+b.name+'</div>'+
       '<div class="hbar-track"><div class="hbar-fill" style="width:'+Math.min(b.pct,100)+'%; background:'+color+';"></div></div>'+

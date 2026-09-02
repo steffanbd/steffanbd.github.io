@@ -1,0 +1,263 @@
+<title>Special Projects</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,440;9..144,520;9..144,600;9..144,680&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --bg:#EEF1EF; --surface:#FFFFFF; --surface-2:#F5F8F6;
+    --ink:#16211C; --ink-soft:#4C5B53; --ink-faint:#7C8D84;
+    --accent:#0E6E58; --accent-strong:#0A5445; --accent-soft:#D7EAE2;
+    --line:#DAE1DC; --line-strong:#C3CCC6;
+    --shadow: 0 1px 2px rgba(15,30,24,0.04), 0 8px 24px -12px rgba(15,30,24,0.14);
+    --focus-ring:#0E6E58;
+    --accent-b: #6E4F1B; --accent-b-soft:#F1E6D2; --accent-b-strong:#573D12;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1714; --surface:#16211C; --surface-2:#1B2620;
+      --ink:#ECF3EF; --ink-soft:#AAC0B4; --ink-faint:#7E9689;
+      --accent:#4FCBA6; --accent-strong:#6EDBB8; --accent-soft:#1E352E;
+      --line:#2B3B33; --line-strong:#3A4C43;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 28px -14px rgba(0,0,0,0.55);
+      --focus-ring:#6EDBB8;
+      --accent-b:#D9B673; --accent-b-soft:#332A18; --accent-b-strong:#E8C98C;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1714; --surface:#16211C; --surface-2:#1B2620;
+    --ink:#ECF3EF; --ink-soft:#AAC0B4; --ink-faint:#7E9689;
+    --accent:#4FCBA6; --accent-strong:#6EDBB8; --accent-soft:#1E352E;
+    --line:#2B3B33; --line-strong:#3A4C43;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 28px -14px rgba(0,0,0,0.55);
+    --focus-ring:#6EDBB8;
+    --accent-b:#D9B673; --accent-b-soft:#332A18; --accent-b-strong:#E8C98C;
+  }
+
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--bg); color:var(--ink); font-family:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif; -webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:"Fraunces", Georgia, serif; font-weight:600; text-wrap:balance; margin:0;}
+  .mono{font-family:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace; font-variant-numeric:tabular-nums;}
+  a{color:inherit;}
+  ::selection{background:var(--accent-soft); color:var(--ink);}
+  :focus-visible{outline:2px solid var(--focus-ring); outline-offset:2px;}
+
+  .topnav{max-width:1180px; margin:0 auto; padding:18px clamp(20px,4vw,56px) 0; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;}
+  .topnav .brand{display:flex; align-items:center; gap:10px; text-decoration:none; font-family:"Fraunces",serif; font-weight:600; font-size:16px; color:var(--ink);}
+  .topnav .brand .mark{width:26px; height:26px; border-radius:7px; background:var(--accent); color:#fff; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700;}
+  .topnav nav{display:flex; gap:4px; flex-wrap:wrap;}
+  .topnav nav a{font-size:13px; font-weight:600; padding:7px 12px; border-radius:999px; text-decoration:none; color:var(--ink-soft); border:1px solid transparent;}
+  .topnav nav a:hover{background:var(--surface-2); color:var(--ink);}
+  .topnav nav a.current{background:var(--accent-soft); color:var(--accent-strong); border-color:var(--accent);}
+
+  .page{max-width:1180px; margin:0 auto; padding: 28px clamp(20px, 4vw, 56px) clamp(40px,6vw,72px);}
+
+  .hero{max-width:70ch; margin-bottom:32px;}
+  .eyebrow{font-size:11px; text-transform:uppercase; letter-spacing:.09em; color:var(--accent-strong); font-weight:700; margin-bottom:10px;}
+  .hero h1{font-size:clamp(28px,3.4vw,38px); margin-bottom:14px;}
+  .hero p{font-size:16px; line-height:1.65; color:var(--ink-soft); margin:0;}
+  .honesty-note{
+    font-size:13px; color:var(--ink-faint); border-left:2px solid var(--line-strong);
+    padding-left:12px; margin-top:16px; line-height:1.6; max-width:68ch;
+  }
+
+  .concepts{display:flex; flex-direction:column; gap:32px;}
+  .concept{
+    background:var(--surface); border:1px solid var(--line); border-radius:18px;
+    padding:clamp(24px,3.4vw,38px); box-shadow:var(--shadow);
+  }
+  .concept-kicker{display:flex; align-items:center; gap:10px; margin-bottom:14px;}
+  .concept-num{
+    width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600;
+    border:1px solid var(--c-strong); color:var(--c-strong);
+  }
+  .concept-cat{font-size:11px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--c-strong);}
+  .concept h2{font-size:26px; margin-bottom:6px;}
+  .concept .tagline{font-size:15px; color:var(--c-strong); font-weight:500; margin-bottom:22px;}
+
+  .concept-grid{display:grid; grid-template-columns:1fr 1fr; gap:28px; margin-bottom:28px;}
+  .concept-block h3{font-family:"IBM Plex Sans",sans-serif; font-size:11.5px; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-faint); font-weight:700; margin-bottom:8px;}
+  .concept-block p{font-size:14.5px; line-height:1.65; color:var(--ink); margin:0;}
+  .concept-block p.soft{color:var(--ink-soft);}
+
+  .phase-strip{display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin-bottom:28px; position:relative;}
+  .phase{position:relative; padding:0 16px 0 0;}
+  .phase:first-child{padding-left:0;}
+  .phase-top{display:flex; align-items:center; gap:10px; margin-bottom:10px;}
+  .phase-dot{
+    width:24px; height:24px; border-radius:50%; background:var(--c-soft); color:var(--c-strong);
+    display:flex; align-items:center; justify-content:center; font-family:"IBM Plex Mono",monospace;
+    font-size:11px; font-weight:700; flex:none; border:1px solid var(--c-strong);
+  }
+  .phase-line{flex:1; height:1px; background:var(--line-strong);}
+  .phase:last-child .phase-line{display:none;}
+  .phase-title{font-size:13.5px; font-weight:600; margin-bottom:6px;}
+  .phase-desc{font-size:12.8px; color:var(--ink-soft); line-height:1.55; margin:0;}
+
+  .info-strip{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:12px; overflow:hidden; margin-bottom:22px;}
+  .info-cell{background:var(--surface-2); padding:16px 18px;}
+  .info-cell h4{font-size:11px; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-faint); font-weight:700; margin-bottom:8px;}
+  .info-cell p{font-size:13px; line-height:1.55; color:var(--ink); margin:0;}
+
+  .open-q{
+    font-size:13px; line-height:1.65; color:var(--ink-soft); font-style:italic;
+    border-top:1px solid var(--line); padding-top:16px;
+  }
+  .open-q b{font-style:normal; color:var(--ink); font-weight:600;}
+
+  .concept.a{--c-strong:var(--accent-strong); --c-soft:var(--accent-soft);}
+  .concept.b{--c-strong:var(--accent-b-strong); --c-soft:var(--accent-b-soft);}
+
+  footer.pagefoot{
+    max-width:1180px; margin:8px auto 0; padding:20px clamp(20px,4vw,56px) 0;
+    border-top:1px solid var(--line); font-size:12px; color:var(--ink-faint);
+    display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+  }
+
+  @media (max-width: 820px){
+    .concept-grid{grid-template-columns:1fr; gap:20px;}
+    .phase-strip{grid-template-columns:1fr; gap:18px;}
+    .phase{padding-right:0;}
+    .phase-line{display:none;}
+    .info-strip{grid-template-columns:1fr;}
+  }
+  @media (prefers-reduced-motion: reduce){ *{transition:none !important; animation:none !important;} }
+</style>
+
+<div class="topnav">
+  <a class="brand" href="index.html"><span class="mark">SB</span>Steffan Beck</a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="resume.html">Resume</a>
+    <a href="blueprints.html">Blueprints</a>
+    <a href="special-projects.html" class="current">Special Projects</a>
+  </nav>
+</div>
+
+<div class="page">
+  <div class="hero">
+    <div class="eyebrow">Special Projects</div>
+    <h1>Problems worth building a product around</h1>
+    <p>Two concepts sketched out at business-plan depth — each one a real operational problem I've lived, worked through as if I were going to build it.</p>
+    <div class="honesty-note">These are theoretical concepts — a place to think in public about product and business-model design. They are not active ventures, and no company exists behind either one yet.</div>
+  </div>
+
+  <div class="concepts">
+
+    <!-- Concept A: Concord -->
+    <article class="concept a">
+      <div class="concept-kicker">
+        <span class="concept-num">01</span>
+        <span class="concept-cat">Facilities &amp; Space Data</span>
+      </div>
+      <h2>Concord</h2>
+      <div class="tagline">One source of truth for space data — so a mismatch surfaces on a Tuesday, not during an audit.</div>
+
+      <div class="concept-grid">
+        <div class="concept-block">
+          <h3>The problem</h3>
+          <p>Facilities teams run space and asset data in Archibus (or a similar IWMS) while HR and finance run Workday, and service requests flow through ServiceNow. The three don't talk to each other natively. Reconciling them is a recurring, manual chore — and a mis-coded department or a stale cost center usually surfaces only when leadership asks a question the data can't cleanly answer.</p>
+        </div>
+        <div class="concept-block">
+          <h3>The idea</h3>
+          <p class="soft">A lightweight reconciliation and visibility layer that sits alongside existing systems rather than replacing them: pulls space, org, and ticket data on a schedule, flags mismatches automatically, and gives the space-planning team one dashboard for utilization, budget, and data-quality health.</p>
+        </div>
+      </div>
+
+      <div class="phase-strip">
+        <div class="phase">
+          <div class="phase-top"><span class="phase-dot">1</span><span class="phase-line"></span></div>
+          <div class="phase-title">Connect</div>
+          <p class="phase-desc">Read-only connectors to Archibus, Workday, and ServiceNow; nightly sync into a staging database; a diff engine flags department, cost-center, and location mismatches.</p>
+        </div>
+        <div class="phase">
+          <div class="phase-top"><span class="phase-dot">2</span><span class="phase-line"></span></div>
+          <div class="phase-title">Reconcile</div>
+          <p class="phase-desc">A review queue where an analyst confirms or corrects each flag, with a full audit trail and an exportable data dictionary — the same kind of governance package built at AU.</p>
+        </div>
+        <div class="phase">
+          <div class="phase-top"><span class="phase-dot">3</span></div>
+          <div class="phase-title">Visualize &amp; alert</div>
+          <p class="phase-desc">Utilization and budget dashboards, scheduled reports to leadership, and proactive alerts — so the mismatch surfaces before an audit or capital cycle finds it first.</p>
+        </div>
+      </div>
+
+      <div class="info-strip">
+        <div class="info-cell">
+          <h4>Who it's for</h4>
+          <p>Mid-size university facilities/space-planning offices and multi-site enterprise real-estate teams — big enough to run an IWMS plus an HRIS, too small for a dedicated data-integration team.</p>
+        </div>
+        <div class="info-cell">
+          <h4>Business model</h4>
+          <p>Annual subscription priced per building or per seat, sized for a facilities-office budget rather than an enterprise IT budget, plus a one-time connector implementation fee.</p>
+        </div>
+        <div class="info-cell">
+          <h4>Why this, why me</h4>
+          <p>Built and maintained exactly this reconciliation by hand for 3+ years — knows which mismatches actually matter and what a real audit asks for.</p>
+        </div>
+      </div>
+
+      <div class="open-q"><b>Open question:</b> API access varies a lot by an institution's Archibus/Workday licensing tier — this likely needs an implementation-services layer at first, until enough customers let the connectors standardize.</div>
+    </article>
+
+    <!-- Concept B: Compa -->
+    <article class="concept b">
+      <div class="concept-kicker">
+        <span class="concept-num">02</span>
+        <span class="concept-cat">People &amp; Compensation Analytics</span>
+      </div>
+      <h2>Compa</h2>
+      <div class="tagline">Pay-band and pay-equity analysis for HR teams too small for a dedicated comp function.</div>
+
+      <div class="concept-grid">
+        <div class="concept-block">
+          <h3>The problem</h3>
+          <p>Most organizations under ~500 employees don't have a dedicated compensation analyst. Pay decisions get made ad hoc in spreadsheets, with no consistent way to check an offer against a pay band, spot compression, or answer a pay-equity question before it becomes a legal one.</p>
+        </div>
+        <div class="concept-block">
+          <h3>The idea</h3>
+          <p class="soft">A tool that ingests an HRIS export — pay, role, level, location, tenure — and produces the pay-band, compa-ratio, and equity views a comp analyst would build by hand, without needing an enterprise HRIS's advanced-compensation module.</p>
+        </div>
+      </div>
+
+      <div class="phase-strip">
+        <div class="phase">
+          <div class="phase-top"><span class="phase-dot">1</span><span class="phase-line"></span></div>
+          <div class="phase-title">Ingest &amp; structure</div>
+          <p class="phase-desc">Guided CSV upload and column mapping; automatic pay-band suggestions by role, level, and geography using percentile bands.</p>
+        </div>
+        <div class="phase">
+          <div class="phase-top"><span class="phase-dot">2</span><span class="phase-line"></span></div>
+          <div class="phase-title">Analyze</div>
+          <p class="phase-desc">Compa-ratio pivot views, compression flags (a senior underpaid relative to a newer junior hire), and a pay-equity summary by role and level.</p>
+        </div>
+        <div class="phase">
+          <div class="phase-top"><span class="phase-dot">3</span></div>
+          <div class="phase-title">Recommend &amp; track</div>
+          <p class="phase-desc">Suggested adjustment ranges within a budget the HR lead sets, plus year-over-year tracking so the same analysis takes minutes at the next cycle.</p>
+        </div>
+      </div>
+
+      <div class="info-strip">
+        <div class="info-cell">
+          <h4>Who it's for</h4>
+          <p>HR generalists and HR Business Partners without a comp specialist — the person doing this in a spreadsheet, under deadline, once a year at review time.</p>
+        </div>
+        <div class="info-cell">
+          <h4>Business model</h4>
+          <p>Per-seat subscription priced for an HR admin, not per employee, to stay affordable at this org size — with a free tier capped at one analysis a year.</p>
+        </div>
+        <div class="info-cell">
+          <h4>Why this, why me</h4>
+          <p>Built exactly this compensation-analytics tool by hand at AMI Expeditionary Healthcare, and it's the tool HR Business Partners actually adopted and used.</p>
+        </div>
+      </div>
+
+      <div class="open-q"><b>Open question:</b> handling pay-equity/demographic data responsibly is a real compliance surface, not just a UX problem — this needs legal and compliance input before touching protected-class analysis, not just an engineering decision.</div>
+    </article>
+
+  </div>
+</div>
+
+<footer class="pagefoot">
+  <span>Steffan Beck — McLean, VA</span>
+  <span class="mono">Updated Sep 2026</span>
+</footer>
