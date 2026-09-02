@@ -407,11 +407,11 @@
         Example model
       </div>
       <div class="piece-head">
-        <h2>Revenue Forecast &amp; Branch Performance</h2>
+        <h2>Revenue Forecast — Quarterly Trend &amp; Top Performers</h2>
         <div class="piece-tools"><span class="piece-tag">Power BI</span><span class="piece-tag">Excel Forecasting</span></div>
       </div>
       <div class="real-data-note"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>Real public company data</div>
-      <p class="piece-desc">The kind of trend-and-ranking view built to track top-line momentum by quarter. The chart below is a deliberate exception to the "fake data" rule everywhere else on this page: it's real quarterly revenue for five AI-related public companies, quarter-ending dates realigned to a shared calendar timeline. Everything below the divider — branch performance — is back to the usual illustrative model.</p>
+      <p class="piece-desc">The kind of trend-and-ranking view built to track top-line momentum by quarter. This is a deliberate exception to the "fake data" rule everywhere else on this page: it's real quarterly revenue for five AI-related public companies, quarter-ending dates realigned to a shared calendar timeline — not a generalized or altered figure like the rest of this section.</p>
 
       <div class="section-label">Quarterly revenue, indexed to Q1 2024 = 100</div>
       <div class="filter-btns" id="btns-revenue-year">
@@ -427,9 +427,6 @@
       <div class="section-label" style="margin-top:22px;">Top performers — revenue growth, Q1 2024 → Q2 2026</div>
       <div class="hbars" id="chart-topperf"></div>
       <div class="chart-note" style="border-top:none; padding-top:0;">Revenue was used here rather than share price — price reflects market sentiment as much as the underlying business, and isn't the metric a revenue-forecast tool would actually track. Figures are drawn from each company's public quarterly filings; NVIDIA and Microsoft report on offset fiscal calendars, so their quarters are mapped to the calendar quarter in which they end.</div>
-
-      <div class="section-label" style="margin-top:24px; padding-top:18px; border-top:1px solid var(--line);">Branch performance vs. plan <span style="text-transform:none; letter-spacing:normal; font-weight:400; color:var(--ink-faint);">— illustrative example, back to the usual model</span></div>
-      <div class="hbars" id="chart-branches"></div>
     </section>
 
     <!-- 4. SQL & Access -->
@@ -950,31 +947,6 @@ fc  <- <span class="kw">forecast</span>(fit, h = <span class="kw">6</span>, leve
       '<div class="hbar-track"><div class="hbar-fill" style="width:'+(g.pct/maxGrowth*100)+'%; background:'+revenueColor[g.ticker]+';"></div></div>'+
       '<div class="hval">+'+g.pct.toFixed(0)+'%</div>';
     chartTop.appendChild(row);
-  });
-
-  // ---- Branch performance ----
-  var branches = [
-    {name:"Branch — North", pct:108, status:"good"},
-    {name:"Branch — Central", pct:94, status:"good"},
-    {name:"Branch — South", pct:74, status:"critical"},
-    {name:"Branch — West", pct:63, status:"critical"}
-  ];
-  var chartBranches = document.getElementById("chart-branches");
-  branches.forEach(function(b){
-    var color = b.status === "good" ? "var(--good)" : "var(--critical)";
-    var row = document.createElement("div");
-    row.className = "hbar-row";
-    row.innerHTML =
-      '<div class="hlabel">'+b.name+'</div>'+
-      '<div class="hbar-track"><div class="hbar-fill" style="width:'+Math.min(b.pct,100)+'%; background:'+color+';"></div></div>'+
-      '<div class="hval">'+b.pct+'%</div>';
-    chartBranches.appendChild(row);
-    if(b.status === "critical"){
-      var note = document.createElement("div");
-      note.style.cssText = "grid-column:1 / -1; font-size:11.5px; color:var(--critical); margin-top:-6px;";
-      note.textContent = "⚠ Below target vs. plan";
-      chartBranches.appendChild(note);
-    }
   });
 
   // ---- 5. Feature importance ----
