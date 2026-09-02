@@ -1,0 +1,762 @@
+<title>Steffan Beck</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,440;9..144,520;9..144,600;9..144,680&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --bg:#EEF1EF;
+    --surface:#FFFFFF;
+    --surface-2:#F5F8F6;
+    --ink:#16211C;
+    --ink-soft:#4C5B53;
+    --ink-faint:#7C8D84;
+    --accent:#0E6E58;
+    --accent-strong:#0A5445;
+    --accent-soft:#D7EAE2;
+    --line:#DAE1DC;
+    --line-strong:#C3CCC6;
+    --shadow: 0 1px 2px rgba(15,30,24,0.04), 0 8px 24px -12px rgba(15,30,24,0.14);
+    --focus-ring:#0E6E58;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0F1714;
+      --surface:#16211C;
+      --surface-2:#1B2620;
+      --ink:#ECF3EF;
+      --ink-soft:#AAC0B4;
+      --ink-faint:#7E9689;
+      --accent:#4FCBA6;
+      --accent-strong:#6EDBB8;
+      --accent-soft:#1E352E;
+      --line:#2B3B33;
+      --line-strong:#3A4C43;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 28px -14px rgba(0,0,0,0.55);
+      --focus-ring:#6EDBB8;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1714;
+    --surface:#16211C;
+    --surface-2:#1B2620;
+    --ink:#ECF3EF;
+    --ink-soft:#AAC0B4;
+    --ink-faint:#7E9689;
+    --accent:#4FCBA6;
+    --accent-strong:#6EDBB8;
+    --accent-soft:#1E352E;
+    --line:#2B3B33;
+    --line-strong:#3A4C43;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 28px -14px rgba(0,0,0,0.55);
+    --focus-ring:#6EDBB8;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:"Fraunces", Georgia, "Times New Roman", serif;
+    font-weight:600;
+    text-wrap:balance;
+    margin:0;
+  }
+  .mono{
+    font-family:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-variant-numeric:tabular-nums;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--accent-soft); color:var(--ink);}
+  :focus-visible{outline:2px solid var(--focus-ring); outline-offset:2px;}
+
+  .topnav{max-width:1180px; margin:0 auto; padding:18px clamp(20px,4vw,56px) 0; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;}
+  .topnav .brand{display:flex; align-items:center; gap:10px; text-decoration:none; font-family:"Fraunces",serif; font-weight:600; font-size:16px; color:var(--ink);}
+  .topnav .brand .mark{width:26px; height:26px; border-radius:7px; background:var(--accent); color:#fff; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700;}
+  .topnav nav{display:flex; gap:4px; flex-wrap:wrap;}
+  .topnav nav a{font-size:13px; font-weight:600; padding:7px 12px; border-radius:999px; text-decoration:none; color:var(--ink-soft); border:1px solid transparent;}
+  .topnav nav a:hover{background:var(--surface-2); color:var(--ink);}
+  .topnav nav a.current{background:var(--accent-soft); color:var(--accent-strong); border-color:var(--accent);}
+
+  .page{
+    max-width:1180px;
+    margin:0 auto;
+    padding: 24px clamp(20px, 4vw, 56px) clamp(20px, 4vw, 56px);
+    display:grid;
+    grid-template-columns: 300px 1fr;
+    gap: clamp(20px, 3vw, 40px);
+    align-items:start;
+  }
+
+  /* ---------- Left rail ---------- */
+  .rail{
+    position:sticky;
+    top:24px;
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+  }
+  .id-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:22px;
+    box-shadow:var(--shadow);
+  }
+  .id-mark{
+    width:44px; height:44px;
+    border-radius:10px;
+    background:var(--accent);
+    color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-family:"Fraunces", serif;
+    font-weight:600;
+    font-size:19px;
+    margin-bottom:16px;
+  }
+  .id-name{
+    font-size:26px;
+    line-height:1.1;
+    letter-spacing:-0.01em;
+  }
+  .id-tagline{
+    margin-top:6px;
+    color:var(--accent-strong);
+    font-size:14.5px;
+    font-weight:500;
+    min-height:20px;
+    transition:opacity .18s ease;
+  }
+  .id-meta{
+    margin-top:16px;
+    padding-top:16px;
+    border-top:1px solid var(--line);
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+    font-size:13.5px;
+    color:var(--ink-soft);
+  }
+  .id-meta-row{display:flex; gap:9px; align-items:baseline;}
+  .id-meta-row svg{flex:none; margin-top:2px; opacity:.75;}
+  .id-meta a{text-decoration:none; border-bottom:1px solid var(--line-strong);}
+  .id-meta a:hover{border-color:var(--accent);}
+  .lang-row{display:flex; gap:6px; flex-wrap:wrap; margin-top:14px;}
+  .lang-chip{
+    font-size:11.5px;
+    font-family:"IBM Plex Mono", monospace;
+    letter-spacing:.02em;
+    padding:3px 8px;
+    border-radius:999px;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    color:var(--ink-soft);
+  }
+  .print-btn{
+    margin-top:16px;
+    width:100%;
+    padding:9px 12px;
+    border-radius:8px;
+    border:1px solid var(--line-strong);
+    background:var(--surface-2);
+    color:var(--ink);
+    font-family:inherit;
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+    display:flex; align-items:center; justify-content:center; gap:7px;
+  }
+  .print-btn:hover{background:var(--accent-soft); border-color:var(--accent);}
+
+  .focus-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:18px;
+    box-shadow:var(--shadow);
+  }
+  .focus-label{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.09em;
+    color:var(--ink-faint);
+    font-weight:600;
+    margin-bottom:11px;
+  }
+  .focus-list{display:flex; flex-direction:column; gap:6px;}
+  .focus-btn{
+    text-align:left;
+    padding:10px 12px;
+    border-radius:9px;
+    border:1px solid transparent;
+    background:transparent;
+    color:var(--ink-soft);
+    font-family:inherit;
+    font-size:13.5px;
+    font-weight:500;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:9px;
+    transition:background .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .focus-btn .dot{
+    width:6px; height:6px; border-radius:50%;
+    background:var(--line-strong);
+    flex:none;
+    transition:background .15s ease, box-shadow .15s ease;
+  }
+  .focus-btn:hover{background:var(--surface-2); color:var(--ink);}
+  .focus-btn[aria-pressed="true"]{
+    background:var(--accent-soft);
+    color:var(--accent-strong);
+    border-color:var(--accent);
+    font-weight:600;
+  }
+  .focus-btn[aria-pressed="true"] .dot{
+    background:var(--accent);
+    box-shadow:0 0 0 3px var(--accent-soft);
+  }
+
+  .edu-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:18px;
+    box-shadow:var(--shadow);
+    display:flex; flex-direction:column; gap:14px;
+  }
+  .edu-item{display:flex; flex-direction:column; gap:2px;}
+  .edu-item .deg{font-size:13.5px; font-weight:600;}
+  .edu-item .school{font-size:12.5px; color:var(--ink-soft);}
+  .edu-item .yr{font-size:11.5px; color:var(--ink-faint);}
+
+  /* ---------- Main column ---------- */
+  main{display:flex; flex-direction:column; gap:34px; min-width:0;}
+
+  .summary-block{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:clamp(20px,3vw,30px);
+    box-shadow:var(--shadow);
+  }
+  .eyebrow{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.09em;
+    color:var(--accent-strong);
+    font-weight:700;
+    margin-bottom:10px;
+  }
+  #summary-text{
+    font-size:17px;
+    line-height:1.6;
+    color:var(--ink);
+    max-width:64ch;
+  }
+
+  section h2{
+    font-size:20px;
+    margin-bottom:16px;
+  }
+
+  /* skills */
+  .skills-wrap{display:flex; flex-wrap:wrap; gap:8px;}
+  .skill-chip{
+    font-size:13px;
+    padding:6px 12px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    background:var(--surface);
+    color:var(--ink-faint);
+    transition:background .18s ease, color .18s ease, border-color .18s ease, transform .18s ease;
+  }
+  .skill-chip.active{
+    background:var(--accent);
+    border-color:var(--accent);
+    color:#fff;
+    font-weight:600;
+  }
+
+  /* experience timeline */
+  .timeline{display:flex; flex-direction:column;}
+  .role{
+    display:grid;
+    grid-template-columns:110px 1fr;
+    gap:18px;
+    padding:18px 0;
+    border-top:1px solid var(--line);
+    transition:opacity .2s ease;
+  }
+  .role:first-child{border-top:none; padding-top:2px;}
+  .role .when{
+    font-size:12.5px;
+    color:var(--ink-faint);
+    padding-top:3px;
+  }
+  .role .when .pending{
+    color:var(--ink-faint);
+    font-style:italic;
+  }
+  .role-title{font-size:15.5px; font-weight:600;}
+  .role-org{font-size:13.5px; color:var(--accent-strong); font-weight:500; margin-top:1px;}
+  .role ul{
+    margin:10px 0 0;
+    padding-left:18px;
+    display:flex; flex-direction:column; gap:5px;
+  }
+  .role li{font-size:13.5px; color:var(--ink-soft); line-height:1.5;}
+  .role.dim{opacity:.55;}
+  .role.dim:hover{opacity:1;}
+
+  /* projects */
+  .projects-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(230px,1fr));
+    gap:14px;
+  }
+  .project-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:13px;
+    padding:18px;
+    box-shadow:var(--shadow);
+    display:flex; flex-direction:column; gap:10px;
+  }
+  .project-card h3{font-size:15px; line-height:1.3;}
+  .project-card p{font-size:13px; color:var(--ink-soft); line-height:1.55; margin:0;}
+  .tool-tags{display:flex; flex-wrap:wrap; gap:6px; margin-top:auto; padding-top:4px;}
+  .tool-tag{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:10.5px;
+    letter-spacing:.02em;
+    padding:3px 7px;
+    border-radius:5px;
+    background:var(--surface-2);
+    color:var(--ink-soft);
+    border:1px solid var(--line);
+  }
+  .projects-empty{
+    font-size:13.5px;
+    color:var(--ink-faint);
+    font-style:italic;
+    padding:6px 2px;
+  }
+
+  footer{
+    margin-top:6px;
+    padding-top:20px;
+    border-top:1px solid var(--line);
+    font-size:12px;
+    color:var(--ink-faint);
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+
+  @media (max-width: 860px){
+    .page{grid-template-columns:1fr; padding:16px;}
+    .rail{position:static;}
+    .focus-list{flex-direction:row; overflow-x:auto; padding-bottom:2px;}
+    .focus-btn{white-space:nowrap;}
+    .role{grid-template-columns:1fr; gap:4px;}
+    .role .when{padding-top:0;}
+  }
+
+  @media print{
+    body{background:#fff;}
+    .print-btn, .focus-card .focus-label + .focus-list button:not([aria-pressed="true"]){display:none;}
+    .page{display:block; max-width:100%; padding:0 8px;}
+    .rail{position:static; display:block;}
+    .id-card, .edu-card{box-shadow:none; border:none; padding:0; margin-bottom:14px;}
+    .focus-card{display:none;}
+    main{margin-top:10px;}
+    .summary-block, .project-card, .role{box-shadow:none;}
+    a{text-decoration:none;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; animation:none !important;}
+  }
+</style>
+
+<div class="topnav">
+  <a class="brand" href="index.html"><span class="mark">SB</span>Steffan Beck</a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="resume.html" class="current">Resume</a>
+    <a href="blueprints.html">Blueprints</a>
+    <a href="special-projects.html">Special Projects</a>
+  </nav>
+</div>
+
+<div class="page">
+  <aside class="rail">
+    <div class="id-card">
+      <div class="id-mark">SB</div>
+      <h1 class="id-name">Steffan Beck</h1>
+      <div class="id-tagline" id="tagline">Business &amp; Data Analyst</div>
+      <div class="id-meta">
+        <div class="id-meta-row">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.4"/></svg>
+          <span>McLean, VA</span>
+        </div>
+        <div class="id-meta-row">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v14H4z"/><path d="m4 6 8 7 8-7"/></svg>
+          <a href="mailto:steffan_beck@hotmail.com">steffan_beck@hotmail.com</a>
+        </div>
+        <div class="id-meta-row">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <a href="tel:+17868169050">(786) 816-9050</a>
+        </div>
+        <div class="id-meta-row">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          <a href="https://www.linkedin.com/in/steffanbeck/" target="_blank" rel="noopener">linkedin.com/in/steffanbeck</a>
+        </div>
+      </div>
+      <div class="lang-row">
+        <span class="lang-chip">EN</span>
+        <span class="lang-chip">ES</span>
+        <span class="lang-chip">FR</span>
+      </div>
+      <button class="print-btn" onclick="window.print()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
+        Save as PDF
+      </button>
+    </div>
+
+    <div class="focus-card">
+      <div class="focus-label">Focus</div>
+      <div class="focus-list" id="focus-list" role="tablist" aria-label="Resume focus"></div>
+    </div>
+
+    <div class="edu-card">
+      <div class="focus-label" style="margin-bottom:2px;">Education</div>
+      <div class="edu-item">
+        <div class="deg">M.S. Data Analytics &amp; Artificial Intelligence</div>
+        <div class="school">American University, Washington, DC</div>
+        <div class="yr">Paused — on hold</div>
+      </div>
+      <div class="edu-item">
+        <div class="deg">B.A. International Hospitality Business — HR Management</div>
+        <div class="school">Glion Institute of Higher Education, Fribourg, Switzerland</div>
+      </div>
+      <div class="edu-item">
+        <div class="deg">Certificate in Human Resource Management (HRMC)</div>
+        <div class="school">ELC eLearning College</div>
+        <div class="yr">Aug 2022</div>
+      </div>
+      <div class="edu-item" style="padding-top:10px; border-top:1px solid var(--line);">
+        <div class="school">Community: Peace Boat Conference (Costa Rica) · Children Tutoring Volunteer</div>
+      </div>
+    </div>
+  </aside>
+
+  <main>
+    <div class="summary-block">
+      <div class="eyebrow">Summary</div>
+      <div id="summary-text"></div>
+    </div>
+
+    <section>
+      <h2>Skills &amp; Tools</h2>
+      <div class="skills-wrap" id="skills-wrap"></div>
+    </section>
+
+    <section>
+      <h2>Experience</h2>
+      <div class="timeline" id="timeline"></div>
+    </section>
+
+    <section>
+      <h2>Tools &amp; Projects</h2>
+      <div class="projects-grid" id="projects-grid"></div>
+    </section>
+
+    <footer>
+      <span>Steffan Beck — McLean, VA</span>
+      <span class="mono">Updated Sep 2026</span>
+    </footer>
+  </main>
+</div>
+
+<script>
+(function(){
+  var FOCI = [
+    {
+      id:"data",
+      label:"Data Analysis & BI",
+      tagline:"Business & Data Analyst",
+      summary:"Data-driven analyst with 10+ years of cross-functional experience in business analysis, financial reconciliation, and BI reporting — including 3.5+ years hands-on Workday experience. Designs and maintains Power BI and Excel dashboards that track KPI and utilization trends, reconciles data across multiple systems (Workday, Archibus, ServiceNow), and converts raw data into actionable recommendations for executive stakeholders. Builds SQL queries and R/Python models as part of graduate coursework in Data Analytics & AI, layered on a decade of hands-on Excel and Power BI dashboard development.",
+      skills:["Power BI","Advanced Excel","SQL","R","Python (learning)","XGBoost","OLS Regression","MS Access","Workday","Archibus IWMS"],
+      projectTags:["data"]
+    },
+    {
+      id:"hr",
+      label:"HR & People Analytics",
+      tagline:"HR & People Analytics",
+      summary:"HR and people-analytics professional with 10+ years of cross-functional experience spanning HRIS operations, workforce and compensation analytics, and business reporting, including 3.5+ years hands-on Workday experience. Builds Power BI and Excel dashboards that turn workforce, compensation, and operational data into actionable insights for HR Business Partners and executive stakeholders — including a compensation-analytics tool analyzing pay by role, level, and geography that was adopted directly by HR Business Partners. HRMC-certified, with full-cycle recruiting and HRIS experience across Workday, Archibus, and ServiceNow.",
+      skills:["Workday","HRIS Reporting","Compensation Analytics","Full-Cycle Recruiting","HRMC Certified","ServiceNow","Archibus IWMS","Power BI"],
+      projectTags:["hr","data"]
+    },
+    {
+      id:"pm",
+      label:"Project Management & Ops",
+      tagline:"Program & Portfolio Management",
+      summary:"Program manager and analytical problem solver with 10+ years of experience building portfolio-level dashboards, scorecards, and reporting mechanisms that turn operational data and business context into decision-ready insights for executive stakeholders. Managed end-to-end analytical workstreams — planning, data validation, cross-functional alignment, and risk identification — on a complex $80M capital infrastructure project spanning multiple phases, contractors, and budget lines. Skilled at translating ambiguous business questions into structured analytical approaches and reconciling multi-system data (Workday, Archibus IWMS, ServiceNow) into governed, audit-ready reporting.",
+      skills:["Program & Portfolio Management","Risk Identification & Tracking","Stakeholder Governance","SOP Development","Facilities & Space Management","Archibus IWMS","Workday","SharePoint"],
+      projectTags:["pm","data"]
+    },
+    {
+      id:"hosp",
+      label:"Hospitality",
+      tagline:"Hospitality Operations",
+      summary:"Hospitality and operations professional with 14+ years of experience spanning hotel operations, quality assurance, and process/standards development — including operations management at two Marriott-family properties (Courtyard by Marriott, Residence Inn by Marriott) and guest-service experience at Disney's Animal Kingdom Lodge. Built SOPs and service standards from the ground up as part of a hostel's pre-opening launch team, restructured a quality function from siloed units into a documented, process-based model, and coached executive stakeholders on reporting and compliance standards. B.A. in International Hospitality Business from Glion Institute of Higher Education, Switzerland; trilingual with hands-on work experience across three countries.",
+      skills:["Multi-Department Hotel Operations","Guest Services & Concierge","Brand-Standard Compliance","SOP Development & Pre-Opening Launch","Team Training","Trilingual (EN/ES/FR)"],
+      projectTags:[]
+    }
+  ];
+
+  var ROLES = [
+    {
+      title:"Sr. Space Administrator & Analyst",
+      org:"American University — Office of Planning & Project Management",
+      when:"Jan 2023 – Jun 2026",
+      bullets:[
+        "Own Archibus (system of record) for campus space data and reconcile it against Workday and ServiceNow, partnering with Finance, HR, and IT on cross-system integration",
+        "Build and automate Excel pivot and Power BI-style dashboards tracking space utilization, KPIs, and capital-project budgets for senior leadership",
+        "Managed financial documentation and reconciliation (purchase orders, invoices, closeout) on the university's largest capital project — the $80M Meltzer Center & SCAN Buildings development",
+        "Led the Library space renovation end-to-end and coordinated a full department relocation within one month, avoiding over $1M in potential penalties",
+        "Designed a ServiceNow-based ticketing and workflow-automation system for service request intake and prioritization"
+      ],
+      tags:["data","hr","pm"]
+    },
+    {
+      title:"Talent Acquisition Specialist",
+      org:"AMI Expeditionary Healthcare — Reston, VA",
+      when:"Sep 2021 – Dec 2022",
+      bullets:[
+        "Built a compensation-analytics tool in Excel/Power BI analyzing pay by state, role, and year — adopted directly by HR Business Partners to inform workforce strategy and budget decisions",
+        "Designed and automated Power BI and Excel dashboards covering recruitment metrics, workforce analytics, and employee lifecycle KPIs",
+        "Led two large-scale staffing initiatives across multiple geographies — full-cycle recruiting, agency relationships, budgets, and PMO-level reporting for the placement of 200+ candidates",
+        "Managed full-cycle recruiting across healthcare verticals via ATS platforms; facilitated new-hire orientation and developed onboarding training materials"
+      ],
+      tags:["hr","data","pm"]
+    },
+    {
+      title:"Customer Experience Coordinator",
+      org:"Grupo CMA — San José, Costa Rica",
+      when:"Oct 2019 – Mar 2021",
+      bullets:[
+        "Developed multi-format Power BI and Excel reports covering Finance, Sales, Customer Satisfaction, and Employee KPIs for senior leadership",
+        "Built a sales forecast tool identifying underperforming product branches, contributing to a $7M+ topline revenue strategy",
+        "Directed a small development team to build an internal order-tracking software tool, improving logistics process management",
+        "Served as acting HR Manager — introduced LinkedIn recruiting, ran employee satisfaction surveys, and partnered with senior HR leadership on retention and succession planning"
+      ],
+      tags:["data","hr"]
+    },
+    {
+      title:"Quality Assurance Specialist",
+      org:"Grupo CMA — San José, Costa Rica",
+      when:"May 2018 – Oct 2019",
+      bullets:[
+        "Led department restructuring from siloed units into a process-based function, defining KPIs and documenting workflows in Visio to track efficiency gains",
+        "Built and automated Power BI and Excel dashboards giving senior leadership visibility into business-critical performance areas",
+        "Coached executive stakeholders on reporting best practices, KPI development, and cross-functional task tracking"
+      ],
+      tags:["pm","data"]
+    },
+    {
+      title:"Sales Support Specialist",
+      org:"Amazon — Costa Rica",
+      when:"Sep 2017 – Mar 2018",
+      bullets:[
+        "Advised third-party sellers on product optimization, keyword strategy, and content presentation to maximize marketplace visibility and sales",
+        "Built a centralized data reference tool compiling FAQs and common inquiries, enabling faster and more accurate support responses"
+      ],
+      tags:["hosp"]
+    },
+    {
+      title:"Operations Manager",
+      org:"Fauna Luxury Hostel — Costa Rica",
+      when:"Nov 2016 – Feb 2017",
+      bullets:[
+        "Core member of the property launch team — developed SOPs and operational policies ahead of public opening",
+        "Trained front-line staff on service standards, customer interaction, and operational protocols",
+        "Established key operational systems including check-in software, cash-handling procedures, and employee scheduling"
+      ],
+      tags:["hosp","pm"]
+    },
+    {
+      title:"Operations Manager",
+      org:"Courtyard by Marriott — Atlanta, GA",
+      when:"Jul 2015 – Aug 2016",
+      bullets:[
+        "Managed operations across three departments (Rooms, Food & Beverage, Guest Services), ensuring Marriott's brand service standards",
+        "Generated Excel-based performance reports — average daily rate, occupancy, and revenue forecasts — for leadership decision-making",
+        "Handled HR functions including onboarding, recruitment, training, and employee-relations coaching for other managers"
+      ],
+      tags:["hosp","pm","hr"]
+    },
+    {
+      title:"Assistant Human Resources",
+      org:"Residence Inn by Marriott — Costa Rica",
+      when:"Feb 2015 – Jul 2015",
+      bullets:[
+        "Delivered core HR functions — conflict resolution, onboarding, recruitment, and training — for a Marriott property in Costa Rica",
+        "Developed employee recognition programs and succession/development pathways to drive engagement and retention"
+      ],
+      tags:["hosp","hr"]
+    },
+    {
+      title:"Rotational Intern",
+      org:"Holiday Inn San José Escazú",
+      when:"Jan 2013 – May 2013",
+      bullets:[
+        "Rotational internship across Customer Service, Finance, and Business Development",
+        "Collaborated with the Customer Experience Manager to develop loyalty and reward programs for guests"
+      ],
+      tags:["hosp"]
+    },
+    {
+      title:"Concierge, Front Desk & Curbside",
+      org:"Disney's Animal Kingdom Lodge — Walt Disney World Resort",
+      when:"Jan 2012 – Jun 2012",
+      bullets:[
+        "Delivered Disney-caliber guest experience across concierge, front desk, and curbside roles",
+        "Assisted guests with restaurant reservations, room bookings, activity coordination, and personalized recommendations"
+      ],
+      tags:["hosp"]
+    }
+  ];
+
+  var PROJECTS = [
+    {
+      title:"Compensation Analytics Tool",
+      desc:"Built a compensation-analytics tool in Excel/Power BI analyzing pay by state, role, and year — adopted directly by HR Business Partners to inform workforce strategy and budget decisions.",
+      tools:["Power BI","Advanced Excel"],
+      tags:["hr","data"]
+    },
+    {
+      title:"Archibus Data Governance & Workday Integration",
+      desc:"Owned Archibus as the system of record for campus space data and partnered with development teams to integrate it with Workday, improving cross-system data flow and audit-readiness.",
+      tools:["Archibus IWMS","Workday"],
+      tags:["data","pm"]
+    },
+    {
+      title:"ServiceNow Ticketing & Workflow Automation",
+      desc:"Designed a ServiceNow-based ticketing and workflow-automation system managing intake, prioritization, and follow-through across service request workstreams.",
+      tools:["ServiceNow"],
+      tags:["pm","data"]
+    },
+    {
+      title:"Sales Forecast & Revenue Strategy Tool",
+      desc:"Built a sales forecast tool in Power BI/Excel identifying underperforming product branches, contributing to a $7M+ topline revenue strategy.",
+      tools:["Power BI","Advanced Excel"],
+      tags:["data","pm"]
+    },
+    {
+      title:"Order-Tracking Software Tool",
+      desc:"Directed a small development team to build an internal order-tracking tool, improving logistics process management for internal and external clients.",
+      tools:["Team Leadership","Process Design"],
+      tags:["pm","data"]
+    },
+    {
+      title:"Predictive Analytics — XGBoost & OLS Regression",
+      desc:"Built XGBoost and OLS regression models in R for a graduate Predictive Analytics course, and contributed to a team real-estate pricing analysis.",
+      tools:["R","XGBoost","OLS Regression"],
+      tags:["data"]
+    }
+  ];
+
+  var focusListEl = document.getElementById("focus-list");
+  var taglineEl = document.getElementById("tagline");
+  var summaryEl = document.getElementById("summary-text");
+  var skillsEl = document.getElementById("skills-wrap");
+  var timelineEl = document.getElementById("timeline");
+  var projectsEl = document.getElementById("projects-grid");
+
+  FOCI.forEach(function(f){
+    var btn = document.createElement("button");
+    btn.className = "focus-btn";
+    btn.type = "button";
+    btn.setAttribute("role","tab");
+    btn.setAttribute("aria-pressed","false");
+    btn.dataset.id = f.id;
+    btn.innerHTML = '<span class="dot"></span><span>'+f.label+'</span>';
+    btn.addEventListener("click", function(){ render(f.id); });
+    focusListEl.appendChild(btn);
+  });
+
+  function render(id){
+    var focus = FOCI.filter(function(f){return f.id===id;})[0] || FOCI[0];
+
+    Array.prototype.forEach.call(focusListEl.children, function(btn){
+      btn.setAttribute("aria-pressed", btn.dataset.id === focus.id ? "true" : "false");
+    });
+
+    taglineEl.style.opacity = 0;
+    summaryEl.style.opacity = 0;
+    setTimeout(function(){
+      taglineEl.textContent = focus.tagline;
+      summaryEl.textContent = focus.summary;
+      taglineEl.style.opacity = 1;
+      summaryEl.style.opacity = 1;
+    }, 90);
+
+    skillsEl.innerHTML = "";
+    var allSkills = [];
+    FOCI.forEach(function(f){ f.skills.forEach(function(s){ if(allSkills.indexOf(s)===-1) allSkills.push(s); }); });
+    var ordered = focus.skills.concat(allSkills.filter(function(s){return focus.skills.indexOf(s)===-1;}));
+    ordered.forEach(function(s){
+      var chip = document.createElement("span");
+      chip.className = "skill-chip" + (focus.skills.indexOf(s)>-1 ? " active" : "");
+      chip.textContent = s;
+      skillsEl.appendChild(chip);
+    });
+
+    timelineEl.innerHTML = "";
+    var sorted = ROLES.slice().sort(function(a,b){
+      var ra = a.tags.indexOf(focus.id) > -1 ? 0 : 1;
+      var rb = b.tags.indexOf(focus.id) > -1 ? 0 : 1;
+      return ra - rb;
+    });
+    sorted.forEach(function(r){
+      var relevant = r.tags.indexOf(focus.id) > -1;
+      var div = document.createElement("div");
+      div.className = "role" + (relevant ? "" : " dim");
+      var bullets = r.bullets.map(function(b){ return "<li>"+b+"</li>"; }).join("");
+      div.innerHTML =
+        '<div class="when mono">'+(r.pending ? '<span class="pending">'+r.when+'</span>' : r.when)+'</div>'+
+        '<div>'+
+          '<div class="role-title">'+r.title+'</div>'+
+          '<div class="role-org">'+r.org+'</div>'+
+          '<ul>'+bullets+'</ul>'+
+        '</div>';
+      timelineEl.appendChild(div);
+    });
+
+    projectsEl.innerHTML = "";
+    var relevantProjects = PROJECTS.filter(function(p){ return p.tags.indexOf(focus.id) > -1; });
+    if(relevantProjects.length === 0){
+      var note = document.createElement("div");
+      note.className = "projects-empty";
+      note.textContent = "Steffan's analytics and systems projects sit later in his career — see the Data Analysis & BI or Project Management & Ops focus, or the Experience section for his hospitality track record.";
+      projectsEl.appendChild(note);
+    } else {
+      relevantProjects.forEach(function(p){
+        var card = document.createElement("div");
+        card.className = "project-card";
+        var tags = p.tools.map(function(t){ return '<span class="tool-tag">'+t+'</span>'; }).join("");
+        card.innerHTML = '<h3>'+p.title+'</h3><p>'+p.desc+'</p><div class="tool-tags">'+tags+'</div>';
+        projectsEl.appendChild(card);
+      });
+    }
+  }
+
+  render("data");
+})();
+</script>
